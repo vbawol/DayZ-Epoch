@@ -11,9 +11,13 @@ local _objPos = _this select 2; //Can be object or position
 local _clientKey = _this select 3;
 local _playerUID = _this select 4;
 local _player = _this select 5;
-local _playerPos = [_player] call fnc_getPos;
+local _playerPos = getPosATL _player; //Use ATL as object position always is in ATL format.
 
 local _index = dayz_serverPUIDArray find _playerUID;
+
+if (typeName _objPos == "OBJECT") then { //_objPos needs to be in ATL format when using distance against playerPos.
+	_objPos = getPosATL _objPos;
+};
 
 local _exitReason = call {
 	//If object or player is null distance returns 9999+
